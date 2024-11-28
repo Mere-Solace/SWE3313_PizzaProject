@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public class Login extends CardScreen {
 	private JPanel pnlLogin;
+	
 	private JPanel pnlLogo;
 	
 	private JButton btnSignUp_SignIn;
@@ -18,14 +19,7 @@ public class Login extends CardScreen {
 	
 	private JButton btnLogin;
 	private JButton btnCreateAccount;
-	
-	/**
-	 * Constructor for the Login screen.
-	 *
-	 * @param screenLayoutController The CardLayout controller for switching screens.
-	 * @param screenContainer        The container holding all screens.
-	 * @param panelName              The unique name for this panel.
-	 */
+
 	public Login(CardLayout screenLayoutController, JPanel screenContainer, String panelName) {
 		super(screenLayoutController, screenContainer, panelName);
 		setScreenPanel(pnlLogin);
