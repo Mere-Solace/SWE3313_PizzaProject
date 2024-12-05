@@ -1,11 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * The Login class represents the Login screen in the application.
- * It allows for the user to enter a valid email and password, and allows navigation
- * to the menu for established users.
- */
 public class Login extends CardScreen {
 	private JPanel pnlLogin;
 	
@@ -32,42 +27,22 @@ public class Login extends CardScreen {
 		
 		btnCreateAccount.addActionListener(_ -> showScreen(Screen.SIGN_UP));
 	}
-
-	/**
-	 * Clears the order details displayed when leaving the screen.
-	 *
-	 * @param destinationScreen The screen the user is navigating to.
-	 * @return True to allow navigation, false otherwise.
-	 */
+	
 	
 	@Override
 	public boolean onAttemptLeaveScreen(Screen destinationScreen) {
 		return true;
 	}
 
-	/**
-	 * Handles logic for entering this screen
-	 *
-	 * @param toScreen The screen the user is navigating to.
-	 * @return The screen to navigate to.
-	 */
 	@Override
 	public Screen onAttemptEnterScreen(Screen toScreen) {
 		return toScreen;
 	}
-
-	/**
-	 * Sets up the screen when entering it, including user info, order details, and fonts.
-	 */
 	
 	@Override
 	public void onEnterScreen() {
 	
 	}
-
-	/**
-	 * Initializes custom UI components, such as images for logos.
-	 */
 	
 	private void createUIComponents() {
 		pnlLogo = new ImagePanel("PizzaLogo.png");

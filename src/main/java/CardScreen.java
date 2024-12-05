@@ -2,11 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-/*
-*   Card Screen is an abstract class that contains all info about a particular screen.
-*   All methods defined here are actions that are performed by the screen
-*/
-
 public abstract class CardScreen {
 	protected static final ProgramInfo info = new ProgramInfo();
 	
@@ -44,25 +39,11 @@ public abstract class CardScreen {
 	 * @return true if leaving the screen is allowed, false otherwise
 	 */
 	public abstract boolean onAttemptLeaveScreen(Screen destinationScreen);
-
-	/**
-	 * Abstract method that determines what should happen when attempting to enter a new screen.
-	 *
-	 * @param toScreen the screen the user is attempting to enter
-	 * @return the resulting screen after attempting to enter
-	 */
+	
 	public abstract Screen onAttemptEnterScreen(Screen toScreen);
-
-	/**
-	 * Abstract method for actions that occur when entering the screen.
-	 */
+	
 	public abstract void onEnterScreen();
-
-	/**
-	 * Signs the user out of the application after confirming the action with the user.
-	 *
-	 * @return true if the user successfully signed out, false otherwise
-	 */
+	
 	public boolean onAttemptSignOut() {
 		if (showConfirmationDialogue(
 				"Would you like to sign out?",
@@ -81,23 +62,13 @@ public abstract class CardScreen {
 		info.setLoggedIn(false);
 		showScreen(Screen.LOGIN);
 	}
-
-	/**
-	 * Signs the user in by setting the user data in the program's information.
-	 *
-	 * @param email the email of the user to sign in
-	 */
+	
 	public void onSignIn(String email) {
 		info.setLoggedIn(true);
 		info.setCurrentUser(info.UserDatabase().getUser(email));
 	}
 
-
-	/**
-	 * Displays a specified screen by navigating through different logic and handling actions.
-	 *
-	 * @param screen the screen to display
-	 */
+	
 	public void showScreen(Screen screen) {
 		if (!onAttemptLeaveScreen(screen))
 			return;
@@ -124,17 +95,7 @@ public abstract class CardScreen {
 		info.advanceScreen(screen);
 		screenLayoutController.show(screenContainer, info.Screens().get((screen)).getPanelName());
 	}
-
-
-	/**
-	 * Sets up the navigation bar for when the user is logged out.
-	 *
-	 * @param home the home button
-	 * @param menu the menu button
-	 * @param deals the deals button
-	 * @param locations the locations button
-	 * @param sign_up_sign_in the sign up/sign in button
-	 */
+	
 	public void setUpNavBar_LoggedOut(JButton home, JButton menu, JButton deals, JButton locations, JButton sign_up_sign_in) {
 		home.addActionListener(_ -> showScreen(Screen.HOME));
 		menu.addActionListener(_ -> showScreen(Screen.MENU));
@@ -142,17 +103,7 @@ public abstract class CardScreen {
 		locations.addActionListener(_ -> showScreen(Screen.LOCATIONS));
 		sign_up_sign_in.addActionListener(_ -> showScreen(Screen.SIGN_IN));
 	}
-
-	/**
-	 * Sets up the navigation bar for when the user is logged in.
-	 *
-	 * @param home the home button
-	 * @param menu the menu button
-	 * @param deals the deals button
-	 * @param locations the locations button
-	 * @param sign_out the sign-out button
-	 * @param cart the cart button
-	 */
+	
 	public void setUpNavBar_LoggedIn(JButton home, JButton menu, JButton deals, JButton locations, JButton sign_out, JButton cart) {
 		home.addActionListener(_ -> showScreen(Screen.HOME));
 		menu.addActionListener(_ -> showScreen(Screen.MENU));
@@ -165,78 +116,38 @@ public abstract class CardScreen {
 			showScreen(Screen.LOGIN);
 		});
 	}
-
-	/**
-	 * Sets up user information such as the user's name and current order total.
-	 *
-	 * @param lblHiName the label to display the user's name
-	 * @param lblCurTotal the label to display the current total cost
-	 */
+	
 	public void setUpUserAndOrderInfo(JLabel lblHiName, JLabel lblCurTotal) {
 		if (info.CurrentUser() != null)
 			lblHiName.setText("Hi, " + info.CurrentUser().getName().split(" ")[0]);
 		if (info.getCurOrder() != null)
 			lblCurTotal.setText("Current Total: $" + info.formatter.format(info.getCurOrder().calcTotalOrderCost()));
 	}
-
-	/**
-	 * Prepares and displays checkout information.
-	 *
-	 * @param lblCheckName the label displaying the customer's name
-	 * @param lblCheckEmail the label displaying the customer's email
-	 * @param lblCheckPhone the label displaying the customer's phone number
-	 */
+	
 	public void setUpForCheckOut(JLabel lblCheckName, JLabel lblCheckEmail, JLabel lblCheckPhone){
 		lblCheckName.setText(info.CurrentUser().getName());
 		lblCheckEmail.setText(info.getEmail());
 		lblCheckPhone.setText(info.getPhoneAtIndex0());
 	}
-
-	/**
-	 * Prepares and displays payment information including total cost, tax, and customer address.
-	 *
-	 * @param txtAreaTotal the text area displaying the total cost information
-	 * @param txtAreaCustAddress the text area displaying the customer's address
-	 */
+	
 	public void setUpForPaymentInfo(JTextArea txtAreaTotal, JTextArea txtAreaCustAddress){
 		txtAreaTotal.setText("Subtotal:\t$" + info.formatter.format(info.getCurOrder().calcTotalOrderCost()) +
 		"\n\nTax:   \t$" + info.formatter.format(0.07*info.getCurOrder().calcTotalOrderCost()) + "\n\nTotal:   \t$" + info.formatter.format(1.07*info.getCurOrder().calcTotalOrderCost()));
 		txtAreaCustAddress.setText(info.getAddress());
 	}
-
-
-
-	/**
-	 * Gets the name of the panel associated with this screen.
-	 *
-	 * @return the name of the panel
-	 */
+	
 	public String getPanelName() {
 		return panelName;
 	}
-
-	/**
-	 * Gets the JPanel object that represents the screen.
-	 *
-	 * @return the screen's JPanel
-	 */
+	
 	public JPanel getScreenPanel() {
 		return screenPanel;
 	}
-
-	/**
-	 * Sets the JPanel for the screen.
-	 *
-	 * @param screenPanel the JPanel to set for this screen
-	 */
+	
 	public void setScreenPanel(JPanel screenPanel) {
 		this.screenPanel = screenPanel;
 	}
-
-
-	/**
-	 * Resets the screen by clearing all user input and resetting the components.
-	 */
+	
 	public void resetScreen() {
 		info.resetLoginAttempts();
 		
@@ -254,20 +165,11 @@ public abstract class CardScreen {
 			}
 		}
 	}
-
-
-	/**
-	 * Adds a JLabel to the list of total cost fields to be updated later.
-	 *
-	 * @param totalCostField the JLabel to add
-	 */
+	
 	public void addTotalCostField(JLabel totalCostField) {
 		totalCostFields.add(totalCostField);
 	}
-
-	/**
-	 * Updates all total cost fields to reflect the current total order cost.
-	 */
+	
 	public void updateTotalCostFields() {
 		for (JLabel lbl : totalCostFields) {
 			String[] curText = lbl.getText().split("\\$");
@@ -276,11 +178,6 @@ public abstract class CardScreen {
 		}
 	}
 
-	/**
-	 *
-	 * @param lbl passes any label that holds the subtotal
-	 * @param item passes any MenuItem to add to the subtotal
-	 */
 	public void updateSubCostField(JLabel lbl, MenuItem item) {
 		int costBreakdownIndex = -1;
 		if (item instanceof Pizza) {

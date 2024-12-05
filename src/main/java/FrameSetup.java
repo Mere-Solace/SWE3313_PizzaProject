@@ -6,16 +6,18 @@ import java.awt.*;
  * which contains various panels (screens) using a CardLayout for navigation.
  * This version does not rely on a GUI form for `screenContainer`.
  */
-public class FrameManager extends JFrame {
-	private JPanel screenContainer;
+public class FrameSetup extends JFrame {
+	private final JPanel screenContainer;
 	
 	/**
 	 * Constructs a new FrameSetup object, setting up the main window
 	 * and initializing screens with a CardLayout for navigation.
 	 */
-	public FrameManager() {
+	public FrameSetup() {
 		// Initialize the screen container and set its layout to CardLayout
+		screenContainer = new JPanel();
 		setContentPane(screenContainer); // Use the screen container as the content pane
+		screenContainer.setLayout(new CardLayout());
 		
 		// Set up frame properties
 		setTitle("Mom and Pop's Shop");
@@ -53,9 +55,5 @@ public class FrameManager extends JFrame {
 		Cart cart = new Cart((CardLayout) screenContainer.getLayout(), screenContainer, "Cart");
 		LocationsForUser locationsForUser = new LocationsForUser((CardLayout) screenContainer.getLayout(), screenContainer, "LocationsForUser");
 		DealsForUser dealsForUser = new DealsForUser((CardLayout) screenContainer.getLayout(), screenContainer, "DealsForUser");
-	}
-	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(FrameManager::new); // Run the GUI in the Event Dispatch Thread
 	}
 }
