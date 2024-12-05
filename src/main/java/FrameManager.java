@@ -12,13 +12,14 @@ public class FrameManager extends JFrame {
 	private static final CardLayout cardLayout = new CardLayout();
 	private static final JPanel frameContainer = new JPanel(cardLayout);
 	
-	
 	int width = 1300;
 	int height = 800;
 	
 	public FrameManager() {
 		frameInitialization();
-		frameContainer.add(new JButton("Click me"));
+		
+		NavBarLoggedOut navBarLoggedOut = new NavBarLoggedOut(frameContainer, "navBarLoggedOut");
+		frameContainer.add(navBarLoggedOut.getScreenPanel());
 	}
 	
 	public void frameInitialization() {
