@@ -1,9 +1,0 @@
-public enum DrinkType {
-	COKE,
-	DIET_COKE,
-	PEPSI,
-	DR_PEPPER,
-	SPRITE,
-	ROOT_BEER,
-	SWEET_TEA
-}

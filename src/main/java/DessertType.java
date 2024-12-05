@@ -1,7 +1,0 @@
-public enum DessertType {
-	CHOCOLATE_LAVA_CAKE,
-	CHEESECAKE,
-	COOKIES,
-	BROWNIE,
-	CINNAMON_KNOTS
-}
